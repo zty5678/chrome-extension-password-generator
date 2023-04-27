@@ -1,52 +1,83 @@
+import './style.css';
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
+
+
+
+
+
 const Popup = () => {
-  const [count, setCount] = useState(0);
-  const [currentURL, setCurrentURL] = useState<string>();
+  const [currentPassword, setCurrentPassword] = useState<string>();
 
   useEffect(() => {
-    chrome.action.setBadgeText({ text: count.toString() });
-  }, [count]);
-
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      setCurrentURL(tabs[0].url);
-    });
+    setCurrentPassword(getCurrentPassword());
+    
   }, []);
 
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
+
+  const copyToClipboard = (text: string) => {
+    const input = document.createElement('textarea');
+    input.innerHTML = text;
+    document.body.appendChild(input);
+    input.select();
+    const result = document.execCommand('copy');
+    document.body.removeChild(input);
+    return result;
   };
+
+  const getCurrentPassword = (): string => {
+    return generateRandomPassword(20);
+  };
+  const refreshPwd = () => {
+    setCurrentPassword(getCurrentPassword())
+  };
+
+
+  function generateRandomPassword(length: number): string {
+    const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+    const upperCaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const characters = lowerCaseLetters + upperCaseLetters + numbers;
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      const index = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(index);
+    }
+    return result;
+  }
+
+ 
 
   return (
     <>
-      <ul style={{ minWidth: "700px" }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
+      <ul className="password-list">
+       
+        <li>
+          <span className="current-password-label">Current password:</span>{' '}
+          <span className="current-password">{currentPassword}</span>
+        </li>
       </ul>
       <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
+        onClick={() => {
+          const success = copyToClipboard(currentPassword || '');
+          if (success) {
+            alert('Password copied to clipboard!');
+          } else {
+            alert('Failed to copy password to clipboard!');
+          }
+        }}
+        className="copy-password-button"
       >
-        count up
+        Copy Password
       </button>
-      <button onClick={changeBackground}>change background</button>
+      <button onClick={refreshPwd} className="refresh-button">
+        Refresh
+      </button>
     </>
   );
+  
+  
 };
 
 const root = createRoot(document.getElementById("root")!);

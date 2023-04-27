@@ -1,0 +1,26 @@
+.password-list {
+  min-width: 300px;
+}
+
+.current-password-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.copy-password-button {
+  background: #3399ff;
+  border: 1px solid #3399ff;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.refresh-button {
+  background: #ffffff;
+  border: 1px solid #3399ff;
+  color: #3399ff;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
