@@ -35,6 +35,15 @@ const Popup = () => {
   const openSetting = () => {
     chrome.runtime.openOptionsPage();
   };
+  function showCopySuccess() {
+    var el = document.getElementById('copy-success');
+    el!!.style.display = 'block';
+    setTimeout(function() {
+      el!!.style.display = 'none';
+    }, 2000);
+  }
+
+  
 
   function generateRandomPassword(length: number): string {
     const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
@@ -65,9 +74,10 @@ const Popup = () => {
           const success = copyToClipboard(currentPassword || '');
           if (success) {
 
-            chrome.runtime.sendMessage({ action: 'showNotification', arg1: "Notification", arg2: "Copy success!"  });
-            chrome.runtime.sendMessage({ action: 'consoleLog', arg1: `time= ${new Date().toLocaleTimeString()}`  });
+            // chrome.runtime.sendMessage({ action: 'showNotification', arg1: "Notification", arg2: "Copy success!"  });
+            // chrome.runtime.sendMessage({ action: 'consoleLog', arg1: `time= ${new Date().toLocaleTimeString()}`  });
 
+            showCopySuccess();
           } else {
             alert('Failed to copy password to clipboard!');
           }
@@ -82,7 +92,14 @@ const Popup = () => {
       <button onClick={openSetting} className="refresh-button">
         Setting
       </button>
+
+
+      <div id="copy-success">复制成功！</div>
     </>
+
+
+
+
   );
 
 
