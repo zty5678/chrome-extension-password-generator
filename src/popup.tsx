@@ -12,7 +12,7 @@ const Popup = () => {
 
   useEffect(() => {
     setCurrentPassword(getCurrentPassword());
-    
+
   }, []);
 
 
@@ -30,7 +30,7 @@ const Popup = () => {
     return generateRandomPassword(20);
   };
   const refreshPwd = () => {
-    setCurrentPassword(getCurrentPassword())
+    setCurrentPassword(getCurrentPassword());
   };
 
 
@@ -47,12 +47,12 @@ const Popup = () => {
     return result;
   }
 
- 
+
 
   return (
     <>
       <ul className="password-list">
-       
+
         <li>
           <span className="current-password-label">Current password:</span>{' '}
           <span className="current-password">{currentPassword}</span>
@@ -62,7 +62,10 @@ const Popup = () => {
         onClick={() => {
           const success = copyToClipboard(currentPassword || '');
           if (success) {
-            alert('Password copied to clipboard!');
+
+            chrome.runtime.sendMessage({ action: 'showNotification', arg1: "Notification", arg2: "Copy success!"  });
+            chrome.runtime.sendMessage({ action: 'consoleLog', arg1: `time= ${new Date().toLocaleTimeString()}`  });
+
           } else {
             alert('Failed to copy password to clipboard!');
           }
@@ -76,8 +79,8 @@ const Popup = () => {
       </button>
     </>
   );
-  
-  
+
+
 };
 
 const root = createRoot(document.getElementById("root")!);
