@@ -32,7 +32,9 @@ const Popup = () => {
   const refreshPwd = () => {
     setCurrentPassword(getCurrentPassword());
   };
-
+  const openSetting = () => {
+    chrome.runtime.openOptionsPage();
+  };
 
   function generateRandomPassword(length: number): string {
     const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
@@ -76,6 +78,9 @@ const Popup = () => {
       </button>
       <button onClick={refreshPwd} className="refresh-button">
         Refresh
+      </button>
+      <button onClick={openSetting} className="refresh-button">
+        Setting
       </button>
     </>
   );

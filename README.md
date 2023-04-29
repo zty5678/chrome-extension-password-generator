@@ -1,6 +1,5 @@
-# Chrome Extension TypeScript Starter
+# Password Generator - Chrome Plugin
 
-![build](https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg)
 
 Chrome Extension, TypeScript and Visual Studio Code
 
