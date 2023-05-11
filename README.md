@@ -3,6 +3,11 @@
 
 Chrome Extension, TypeScript and Visual Studio Code
 
+## Screenshots
+
+![pwd-generator-screenshots](https://github.com/zty5678/chrome-extension-password-generator/assets/2247076/5417badf-2ad1-4922-bfc4-b44d8a0d156e)
+
+
 ## Prerequisites
 
 * [node + npm](https://nodejs.org/) (Current Version)
